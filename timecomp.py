@@ -15,6 +15,18 @@
 import os
 import subprocess
 import sys, argparse
+import ffmpeg
+
+def getFrame(vidFile, frameNum):
+    out = (
+        ffmpeg
+        .input(vidFile)
+        .filter('select', 'gte(n,{})'.format(frameNum)
+        .output('pipe:', vframes=1, format='image2', vcodec='mjpeg')
+        .run(capture_stout=True)
+    )
+    return out
+
 
 if __name__ == "__main__":
 
